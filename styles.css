@@ -69,7 +69,7 @@ ul {
 
 /* Section Images */
 .about-photo,
-.building-photo{
+.building-photo {
   max-height: 400px;   /* limit the tall size */
   width: auto;         /* auto-adjust width */
   display: block;      /* keeps spacing consistent */
