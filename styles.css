@@ -78,10 +78,12 @@ ul {
   box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
 }
 
-/* Override JUST the prescribed burn image */
-#burn-photo {
-  max-height: 450px;
-  width: auto;
+/* Consistent sizing for section photos */
+#burn-photo,
+#canopy-photo,
+#mangroves-photo {
+  max-height: 475px;   /* same height for all */
+  width: auto;         /* preserve aspect ratio */
   display: block;
   margin: 20px auto;
   border-radius: 10px;
