@@ -112,13 +112,10 @@ footer {
   color: #1e5631; /* Eco green */
   margin-right: 10px;
 }
-What you need to add in index.html:
-In your <head> section, add Font Awesome so icons work:
 
 html
 Copy code
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-Then drop icons wherever they fit naturally, e.g. in “What We’re Building”:
 
 html
 Copy code
