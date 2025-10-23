@@ -69,7 +69,14 @@ ul {
 
 /* Section Images */
 .about-photo,
-.building-photo,
+.building-photo{
+  max-height: 400px;   /* limit the tall size */
+  width: auto;         /* auto-adjust width */
+  display: block;      /* keeps spacing consistent */
+  margin: 20px auto;   /* centers image */
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+},
 .partners-photo,
 .contact-photo {
   max-width: 70%;
