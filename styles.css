@@ -80,7 +80,7 @@ ul {
 
 /* Override JUST the prescribed burn image */
 #burn-photo {
-  max-height: 350px;
+  max-height: 450px;
   width: auto;
   display: block;
   margin: 20px auto;
@@ -89,7 +89,7 @@ ul {
 }
 
 /* Center text in specific sections */
-.building, .contact {
+.building, .contact, .about {
   text-align: center;
 }
 
