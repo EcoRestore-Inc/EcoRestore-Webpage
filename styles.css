@@ -70,7 +70,7 @@ ul {
 /* Section Images */
 .about-photo,
 .building-photo {
-  max-height: 400px;   /* limit the tall size */
+  max-height: 500px;   /* limit the tall size */
   width: auto;         /* auto-adjust width */
   display: block;      /* keeps spacing consistent */
   margin: 20px auto;   /* centers image */
