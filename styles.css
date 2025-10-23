@@ -76,7 +76,7 @@ ul {
   margin-top: 20px;
   border-radius: 10px;
   box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
-},
+}
 /* Override JUST the prescribed burn image */
 #burn-photo {
   max-height: 400px;
