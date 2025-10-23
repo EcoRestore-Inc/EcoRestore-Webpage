@@ -77,14 +77,20 @@ ul {
   border-radius: 10px;
   box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
 }
+
 /* Override JUST the prescribed burn image */
 #burn-photo {
-  max-height: 400px;
+  max-height: 350px;
   width: auto;
   display: block;
   margin: 20px auto;
   border-radius: 10px;
   box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Center text in specific sections */
+.building, .contact {
+  text-align: center;
 }
 
 /* Footer */
@@ -99,3 +105,25 @@ footer {
   max-width: 100px;
   margin-top: 10px;
 }
+
+/* Icon Styling */
+.icon {
+  font-size: 1.5rem;
+  color: #1e5631; /* Eco green */
+  margin-right: 10px;
+}
+What you need to add in index.html:
+In your <head> section, add Font Awesome so icons work:
+
+html
+Copy code
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+Then drop icons wherever they fit naturally, e.g. in “What We’re Building”:
+
+html
+Copy code
+<li><i class="fas fa-seedling icon"></i>Plant identification & native replacement guidance</li>
+<li><i class="fas fa-book-open icon"></i>Restoration journal & best management practices</li>
+<li><i class="fas fa-map icon"></i>Mapping tools for small yards to large parcels</li>
+<li><i class="fas fa-users icon"></i>Community hub for nurseries and restoration services</li>
+<li><i class="fas fa-drone icon"></i>Future: Drone-enabled aerial monitoring</li>
