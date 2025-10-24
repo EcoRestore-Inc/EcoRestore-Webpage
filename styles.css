@@ -82,7 +82,7 @@ ul {
 #burn-photo,
 #canopy-photo,
 #mangroves-photo {
-  max-height: 475px;   /* same height for all */
+  max-height: 450px;   /* same height for all */
   width: auto;         /* preserve aspect ratio */
   display: block;
   margin: 20px auto;
