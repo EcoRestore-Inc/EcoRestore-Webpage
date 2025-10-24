@@ -109,7 +109,15 @@ footer {
   margin-top: 10px;
 }
 
-/* Icon Styling */
+/* Global icon styling */
+.icon {
+  margin-right: 8px;
+  color: #1e5631; /* Eco green for all main icons */
+  vertical-align: middle;
+  font-size: 1.2em;
+}
+
+/* Footer-specific icon override */
 .footer-icon {
   margin-right: 8px;
   color: #88bb67; /* EcoRestore green */
