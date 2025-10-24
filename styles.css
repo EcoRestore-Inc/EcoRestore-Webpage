@@ -110,9 +110,9 @@ footer {
 }
 
 /* Icon Styling */
-.icon {
+.footer-icon {
   margin-right: 8px;
-  color: #a8e6a2; /* lighter green for contrast */
+  color: #488bb67; /* EcoRestore green */
   vertical-align: middle; /* keeps icon aligned with text */
-  font-size: 1.2em; /* slightly larger so it balances with text */
+  font-size: 1.3em; /* optional: slightly larger for emphasis */
 }
