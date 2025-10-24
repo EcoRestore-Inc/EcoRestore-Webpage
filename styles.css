@@ -112,7 +112,7 @@ footer {
 /* Icon Styling */
 .icon {
   margin-right: 8px;
-  color: #1e5631; /* Eco green */
+  color: #a8e6a2; /* lighter green for contrast */
   vertical-align: middle; /* keeps icon aligned with text */
   font-size: 1.2em; /* slightly larger so it balances with text */
 }
