@@ -39,6 +39,16 @@ body {
   max-width: 800px;
   margin: auto;
   border-radius: 10px;
+
+  /* Fade-in effect */
+  opacity: 0;
+  animation: fadeIn 2s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 /* Section Styling */
@@ -115,6 +125,12 @@ footer {
   color: #1e5631; /* Eco green for all main icons */
   vertical-align: middle;
   font-size: 1.2em;
+}
+
+.icon:hover {
+  color: #88bb67;  /* lighter EcoRestore green */
+  transform: scale(1.1);
+  transition: all 0.3s ease;
 }
 
 /* Footer-specific icon override */
