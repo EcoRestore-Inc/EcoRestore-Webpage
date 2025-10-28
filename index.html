@@ -78,7 +78,7 @@
 
 <!-- Interactive Florida Map Script -->
   <script>
-  // Full curated nursery dataset
+  // Full curated nursery dataset (grouped by city)
   const nurseries = {
     "Gainesville": ["Grow-Hub", "Rewild Nursery", "UF Native Plant Nursery"],
     "Alachua": ["Landscapes Unlimited Nursery"],
@@ -237,7 +237,7 @@
   }
 
   function renderMap() {
-    const container = document.getElementById("florida-map-container");
+    const container = document.getElementById("florloida-map-container");
     if (!container) return;
 
     const svgNS = "http://www.w3.org/2000/svg";
@@ -245,15 +245,17 @@
     svg.setAttribute("viewBox", `0 0 ${viewBox.w} ${viewBox.h}`);
     svg.setAttribute("class", "nursery-map");
 
+    // Florida silhouette (clean gray outline)
     const path = document.createElementNS(svgNS, "path");
     path.setAttribute("d",
-  "M188.6,5.6L182.4,19.4L175.1,23.2L170.2,35.3L158.2,40.5L148.3,40.8L139.4,49.3L138.1,62.9L143.4,74.2L142.1,87.1L150.3,94.7L153.5,107.4L148.5,114.8L137.1,122.5L126.6,128.3L123.6,140.6L125.8,148.7L122.4,159.6L113.8,165.2L109.7,178.3L98.3,187.5L92.1,197.3L84.3,202.1L73.8,207.9L66.7,213.1L59.6,219.6L57.1,229.4L60.2,239.7L65.7,245.6L73.6,248.7L82.3,252.1L91.6,257.6L98.9,264.8L105.8,272.1L113.2,278.6L121.4,284.5L129.3,290.1L136.9,295.8L142.7,304.3L147.6,312.6L153.2,321.4L160.3,328.6L168.5,332.7L177.4,336.8L186.5,340.4L194.7,342.9L203.5,343.6L210.8,338.1L215.2,329.6L220.3,321.2L224.1,312.9L227.6,302.3L228.5,291.6L227.4,281.5L226.1,271.7L224.3,261.5L221.9,252.3L219.2,243.6L215.7,235.2L212.1,227.5L208.5,220.6L204.6,213.9L200.1,207.6L196.1,200.5L192.6,193.5L189.5,186.3L186.6,179.2L183.2,172.4L179.7,165.8L176.1,159.2L172.8,152.6L169.5,146.4L166.1,140.3L162.7,134.6L159.2,128.7L155.6,123.2L151.7,117.9L147.8,113.1L143.9,108.5L140,104.1L136.1,100.1L132.1,96.2L128.2,92.7L124.3,89.5L120.3,86.7L116.4,84.2L112.4,82L108.5,80.2L104.6,78.6L100.7,77.3L96.7,76.2L92.8,75.4L88.9,74.9L84.9,74.5L81,74.3L77.1,74.4L73.1,74.6L69.2,75L65.3,75.6L61.3,76.4L57.4,77.4L53.5,78.5L49.5,79.8L45.6,81.2L41.7,82.7L37.7,84.3L33.8,86L29.9,87.8L25.9,89.6L22,91.5L18.1,93.5L14.1,95.5L10.2,97.6L6.3,99.8L2.3,102L-1.6,104.2L-5.6,106.5L-9.5,108.8Z"
-);
-path.setAttribute("fill", "#f3f4f6");
-path.setAttribute("stroke", "#d1d5db");
-path.setAttribute("stroke-width", "1.5");
+      "M188.6,5.6L182.4,19.4L175.1,23.2L170.2,35.3L158.2,40.5L148.3,40.8L139.4,49.3L138.1,62.9L143.4,74.2L142.1,87.1L150.3,94.7L153.5,107.4L148.5,114.8L137.1,122.5L126.6,128.3L123.6,140.6L125.8,148.7L122.4,159.6L113.8,165.2L109.7,178.3L98.3,187.5L92.1,197.3L84.3,202.1L73.8,207.9L66.7,213.1L59.6,219.6L57.1,229.4L60.2,239.7L65.7,245.6L73.6,248.7L82.3,252.1L91.6,257.6L98.9,264.8L105.8,272.1L113.2,278.6L121.4,284.5L129.3,290.1L136.9,295.8L142.7,304.3L147.6,312.6L153.2,321.4L160.3,328.6L168.5,332.7L177.4,336.8L186.5,340.4L194.7,342.9L203.5,343.6L210.8,338.1L215.2,329.6L220.3,321.2L224.1,312.9L227.6,302.3L228.5,291.6L227.4,281.5L226.1,271.7L224.3,261.5L221.9,252.3L219.2,243.6L215.7,235.2L212.1,227.5L208.5,220.6L204.6,213.9L200.1,207.6L196.1,200.5L192.6,193.5L189.5,186.3L186.6,179.2L183.2,172.4L179.7,165.8L176.1,159.2L172.8,152.6L169.5,146.4L166.1,140.3L162.7,134.6L159.2,128.7L155.6,123.2L151.7,117.9L147.8,113.1L143.9,108.5L140,104.1L136.1,100.1L132.1,96.2L128.2,92.7L124.3,89.5L120.3,86.7L116.4,84.2L112.4,82L108.5,80.2L104.6,78.6L100.7,77.3L96.7,76.2L92.8,75.4L88.9,74.9L84.9,74.5L81,74.3L77.1,74.4L73.1,74.6L69.2,75L65.3,75.6L61.3,76.4L57.4,77.4L53.5,78.5L49.5,79.8L45.6,81.2L41.7,82.7L37.7,84.3L33.8,86L29.9,87.8L25.9,89.6L22,91.5L18.1,93.5L14.1,95.5L10.2,97.6L6.3,99.8L2.3,102L-1.6,104.2L-5.6,106.5L-9.5,108.8Z"
+    );
+    path.setAttribute("fill", "#f3f4f6");
+    path.setAttribute("stroke", "#d1d5db");
+    path.setAttribute("stroke-width", "1.5");
     svg.appendChild(path);
 
+    // Tooltip
     const tooltip = document.createElement("div");
     tooltip.setAttribute("class", "map-tooltip");
     tooltip.style.position = "absolute";
@@ -267,31 +269,31 @@ path.setAttribute("stroke-width", "1.5");
     container.style.position = "relative";
     container.appendChild(tooltip);
 
+    // Leaf marker path (small FA-style leaf)
+    const leafPath = "M6 0C2 0 0 2 0 6c0 8 12 14 12 14s12-6 12-14c0-4-2-6-6-6H6z";
+
     Object.keys(nurseries).forEach(city => {
       const [lat, lon] = coords[city] || [];
       if (!lat || !lon) return;
       const {x,y} = project(lat,lon);
 
-      const circle = document.createElementNS(svgNS, "circle");
-      circle.setAttribute("cx", x);
-      circle.setAttribute("cy", y);
-      circle.setAttribute("r", 5);
-      circle.setAttribute("fill", "#10b981");
-      circle.setAttribute("stroke", "#065f46");
-      circle.setAttribute("stroke-width", "1.5");
-      circle.style.cursor = "pointer";
+      const leaf = document.createElementNS(svgNS, "path");
+      leaf.setAttribute("d", leafPath);
+      leaf.setAttribute("fill", "#10b981");
+      leaf.setAttribute("transform", `translate(${x-6},${y-6}) scale(0.5)`);
+      leaf.style.cursor = "pointer";
 
-      circle.addEventListener("mouseenter", () => {
+      leaf.addEventListener("mouseenter", () => {
         tooltip.innerHTML = "<strong>" + city + "</strong><br/>" + nurseries[city].join("<br/>");
         tooltip.style.left = (x+20) + "px";
         tooltip.style.top = (y) + "px";
         tooltip.style.display = "block";
       });
-      circle.addEventListener("mouseleave", () => {
+      leaf.addEventListener("mouseleave", () => {
         tooltip.style.display = "none";
       });
 
-      svg.appendChild(circle);
+      svg.appendChild(leaf);
     });
 
     container.appendChild(svg);
