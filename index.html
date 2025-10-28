@@ -49,6 +49,17 @@
   <img src="Logo/canopy_view_FL.jpg" alt="Community partnership" id="canopy-photo">
 </section>
 
+<!-- Community Resource Hub -->
+  <section class="resource-hub">
+    <h2><i class="fas fa-seedling icon"></i> EcoRestore Community Resource Hub</h2>
+    <p>
+      A living network of nurseries and resources that support ecological restoration 
+      across Florida. This hub connects communities with sources of native plants 
+      and restoration knowledge.
+    </p>
+    <div id="florida-map-container"></div>
+  </section>
+
   <!-- Get Involved -->
   <section class="contact">
   <h2><i class="fas fa-envelope-open-text icon"></i> Get Involved</h2>
@@ -65,5 +76,224 @@
   <img src="Logo/EcoRestoreInc_logo(2).jpg" alt="EcoRestore Logo" class="footer-logo">
 </footer>
 
-</body>
-</html>
+<!-- Interactive Florida Map Script -->
+  <script>
+  // Full curated nursery dataset
+  const nurseries = {
+    "Gainesville": ["Grow-Hub", "Rewild Nursery", "UF Native Plant Nursery"],
+    "Alachua": ["Landscapes Unlimited Nursery"],
+    "Micanopy": ["Urban Forestry"],
+    "Macclenny": ["Revive Native Plant Nursery"],
+    "Fountain": ["Sandhills Native Nursery"],
+    "Starke": ["Bella Jardins Boutique"],
+    "West Melbourne": ["Native Butterfly Flowers"],
+    "Rockledge": ["Rockledge Gardens"],
+    "Grant-Valkaria": ["Rosemallow Farms"],
+    "Merritt Island": ["Wild, Wet N Wacky Florida Native Plants"],
+    "Deerfield Beach": ["Beds for Butterflies"],
+    "Fort Lauderdale": ["Zugar Growers"],
+    "Melrose": ["North Florida Natives"],
+    "Lecanto": ["Anson Nursery"],
+    "Naples": ["Clark’s Nursery - Florida Native Plants", "Everglades Native Designs"],
+    "Buckingham": ["Natives of Corkscrew Nursery"],
+    "Fort White": ["TACA Nursery"],
+    "Lake City": ["Falling Creek Nursery"],
+    "Arcadia": ["Sandhill Native Growers", "Tiger Bay Nursery LLC"],
+    "Nocatee": ["EarthBalance Native Plant Nursery"],
+    "Jacksonville": ["Gnarly Nursery", "Native & Uncommon Plants", "Plant Place Nursery", "Wacca Pilatka"],
+    "Flagler Beach": ["Flora of Flagler Native Plants"],
+    "Trenton": ["Natural Treasures Farm & Nursery"],
+    "Brooksville": ["Ferngully Market"],
+    "Bowling Green": ["Flatwood Natives"],
+    "Sebring": ["Hickory Hill Nursery & Landscaping"],
+    "Tampa": ["Little Red Wagon Native Nursery"],
+    "Plant City": ["Springer Environmental Services Inc."],
+    "Vero Beach": ["Pelican Island Audubon Society", "ELC Native Plant Nursery"],
+    "Groveland": ["Green Isle Gardens", "Things That Grow"],
+    "Fort Myers": ["All Native Garden Center & Plant Nursery"],
+    "North Fort Myers": ["Deep South Native Nurseries"],
+    "Sanibel": ["SCCF Native Landscapes & Garden Center"],
+    "Monticello": ["Apalachee Native Nursery"],
+    "Tallahassee": ["Earth Balance Native Nurseries of Tallahassee Inc."],
+    "Myakka City": ["McKeithen Growers Inc."],
+    "Parrish": ["Sweet Bay Nursery"],
+    "Ocala": ["Bee Native", "Goldenrod Meadows Farm"],
+    "Ocklawaha": ["Everything Under the Oaks"],
+    "Indiantown": ["Martin County Farms Native Nursery"],
+    "Jensen Beach": ["B the Change Native Plants & Landscape Design"],
+    "Homestead": ["Casey's Corner Nursery & Landscaping"],
+    "Miami": ["Flora of Miami", "Florida Butterfly Botanicals", "Pro Native Consulting", "Smarty Plants Nursery"],
+    "Key West": ["Key West Tropical Forest & Botanical Garden"],
+    "Yulee": ["Amelia's Native Wildflowers"],
+    "Fort Walton Beach": ["Ladybug Native Nursery"],
+    "Christmas": ["Green Images Native Landscape Plants"],
+    "Ocoee": ["My Florida Meadow"],
+    "Orlando": ["Orlando Native Plants (An Urban Nursery)"],
+    "Lake Worth": ["Amelia’s SmartyPlants", "Meadow Beauty Nursery"],
+    "West Palm Beach": ["Cottage Garden"],
+    "Loxahatchee Groves": ["Native Choice"],
+    "Boynton Beach": ["Sustainscape Native Nursery & Design"],
+    "Zephyrhills": ["Bee Happy Native Nursery"],
+    "Largo": ["Butterfly Habitat Restoration"],
+    "St Petersburg": ["Twigs & Leaves"],
+    "Davenport": ["The Natives"],
+    "Lakeland": ["The Nectary"],
+    "Hawthorne": ["Chiappini Farm Native Nursery"],
+    "Milton": ["Crazy Native Plant Lady"],
+    "Sarasota": ["Florida Native Plants Nursery & Landscaping", "Paradise Found Nursery", "Stocking Savvy"],
+    "Longwood": ["Brantley Nurseries"],
+    "St Augustine": ["Native Plant Consulting"],
+    "Oxford": ["Fairfield Farms"],
+    "Perry": ["Whitfield & Daughters (Turkey Roost Nursery)"],
+    "Edgewater": ["Asclepias Acres"],
+    "De Leon Springs": ["Dune Sunflower Nursery"],
+    "Pierson": ["Flowing Well Tree Farm"],
+    "Defuniak Springs": ["7 Pines Native Plant Nursery"]
+  };
+
+  // Coordinates lookup
+  const coords = {
+    "Gainesville": [29.6516, -82.3248],
+    "Alachua": [29.751, -82.495],
+    "Micanopy": [29.504, -82.283],
+    "Macclenny": [30.282, -82.124],
+    "Fountain": [30.45, -85.42],
+    "Starke": [29.946, -82.109],
+    "West Melbourne": [28.071, -80.671],
+    "Rockledge": [28.324, -80.732],
+    "Grant-Valkaria": [27.925, -80.565],
+    "Merritt Island": [28.318, -80.667],
+    "Deerfield Beach": [26.318, -80.099],
+    "Fort Lauderdale": [26.122, -80.137],
+    "Melrose": [29.707, -82.047],
+    "Lecanto": [28.851, -82.487],
+    "Naples": [26.142, -81.794],
+    "Buckingham": [26.667, -81.734],
+    "Fort White": [29.923, -82.714],
+    "Lake City": [30.189, -82.64],
+    "Arcadia": [27.217, -81.858],
+    "Nocatee": [27.162, -81.885],
+    "Jacksonville": [30.332, -81.655],
+    "Flagler Beach": [29.474, -81.127],
+    "Trenton": [29.615, -82.817],
+    "Brooksville": [28.555, -82.387],
+    "Bowling Green": [27.638, -81.823],
+    "Sebring": [27.495, -81.441],
+    "Tampa": [27.95, -82.457],
+    "Plant City": [28.018, -82.114],
+    "Vero Beach": [27.638, -80.397],
+    "Groveland": [28.558, -81.851],
+    "Fort Myers": [26.640, -81.872],
+    "North Fort Myers": [26.667, -81.88],
+    "Sanibel": [26.448, -82.022],
+    "Monticello": [30.545, -83.871],
+    "Tallahassee": [30.438, -84.281],
+    "Myakka City": [27.344, -82.162],
+    "Parrish": [27.586, -82.425],
+    "Ocala": [29.187, -82.140],
+    "Ocklawaha": [29.044, -81.928],
+    "Indiantown": [27.027, -80.484],
+    "Jensen Beach": [27.254, -80.229],
+    "Homestead": [25.468, -80.477],
+    "Miami": [25.761, -80.191],
+    "Key West": [24.555, -81.780],
+    "Yulee": [30.631, -81.606],
+    "Fort Walton Beach": [30.405, -86.618],
+    "Christmas": [28.536, -81.017],
+    "Ocoee": [28.574, -81.543],
+    "Orlando": [28.538, -81.379],
+    "Lake Worth": [26.616, -80.068],
+    "West Palm Beach": [26.715, -80.053],
+    "Loxahatchee Groves": [26.682, -80.279],
+    "Boynton Beach": [26.531, -80.090],
+    "Zephyrhills": [28.233, -82.181],
+    "Largo": [27.909, -82.788],
+    "St Petersburg": [27.767, -82.638],
+    "Davenport": [28.161, -81.601],
+    "Lakeland": [28.039, -81.949],
+    "Hawthorne": [29.591, -82.087],
+    "Milton": [30.632, -87.039],
+    "Sarasota": [27.336, -82.530],
+    "Longwood": [28.702, -81.338],
+    "St Augustine": [29.901, -81.312],
+    "Oxford": [28.949, -82.003],
+    "Perry": [30.117, -83.581],
+    "Edgewater": [28.984, -80.902],
+    "De Leon Springs": [29.121, -81.353],
+    "Pierson": [29.241, -81.457],
+    "Defuniak Springs": [30.721, -86.113]
+  };
+
+  const bounds = { minLat: 24.3, maxLat: 31.1, minLon: -87.8, maxLon: -80.0 };
+  const viewBox = { w: 300, h: 400 };
+
+  function project(lat, lon) {
+    const xNorm = (lon - bounds.minLon) / (bounds.maxLon - bounds.minLon);
+    const yNorm = (bounds.maxLat - lat) / (bounds.maxLat - bounds.minLat);
+    const padX = 30, padYTop = 10, padYBot = 15;
+    const x = padX + xNorm * (viewBox.w - padX * 2);
+    const y = padYTop + yNorm * (viewBox.h - padYTop - padYBot);
+    return {x,y};
+  }
+
+  function renderMap() {
+    const container = document.getElementById("florida-map-container");
+    if (!container) return;
+
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${viewBox.w} ${viewBox.h}`);
+    svg.setAttribute("class", "nursery-map");
+
+    const path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d","M200 20 L220 60 L200 100 L180 130 L160 200 L140 240 L130 270 L120 330 L140 380 L100 390 L80 350 L60 300 L40 250 L50 200 L60 150 L80 100 L120 60 Z");
+    path.setAttribute("fill", "#e0f7ec");
+    path.setAttribute("stroke", "#10b981");
+    path.setAttribute("stroke-width", "2");
+    svg.appendChild(path);
+
+    const tooltip = document.createElement("div");
+    tooltip.setAttribute("class", "map-tooltip");
+    tooltip.style.position = "absolute";
+    tooltip.style.padding = "6px 10px";
+    tooltip.style.background = "white";
+    tooltip.style.border = "1px solid #ddd";
+    tooltip.style.borderRadius = "6px";
+    tooltip.style.fontSize = "12px";
+    tooltip.style.boxShadow = "0 2px 6px rgba(0,0,0,0.15)";
+    tooltip.style.display = "none";
+    container.style.position = "relative";
+    container.appendChild(tooltip);
+
+    Object.keys(nurseries).forEach(city => {
+      const [lat, lon] = coords[city] || [];
+      if (!lat || !lon) return;
+      const {x,y} = project(lat,lon);
+
+      const circle = document.createElementNS(svgNS, "circle");
+      circle.setAttribute("cx", x);
+      circle.setAttribute("cy", y);
+      circle.setAttribute("r", 5);
+      circle.setAttribute("fill", "#10b981");
+      circle.setAttribute("stroke", "#065f46");
+      circle.setAttribute("stroke-width", "1.5");
+      circle.style.cursor = "pointer";
+
+      circle.addEventListener("mouseenter", () => {
+        tooltip.innerHTML = "<strong>" + city + "</strong><br/>" + nurseries[city].join("<br/>");
+        tooltip.style.left = (x+20) + "px";
+        tooltip.style.top = (y) + "px";
+        tooltip.style.display = "block";
+      });
+      circle.addEventListener("mouseleave", () => {
+        tooltip.style.display = "none";
+      });
+
+      svg.appendChild(circle);
+    });
+
+    container.appendChild(svg);
+  }
+
+  document.addEventListener("DOMContentLoaded", renderMap);
+  </script>
