@@ -6,6 +6,8 @@
   <title>EcoRestore</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -57,7 +59,7 @@
       across Florida. This hub connects communities with sources of native plants 
       and restoration knowledge.
     </p>
-    <div id="florida-map-container"></div>
+    <div id="florida-map" style="height:420px;"></div>
   </section>
 
   <!-- Get Involved -->
@@ -224,81 +226,82 @@
     "Defuniak Springs": [30.721, -86.113]
   };
 
-  const bounds = { minLat: 24.3, maxLat: 31.1, minLon: -87.8, maxLon: -80.0 };
-  const viewBox = { w: 300, h: 400 };
+    // Build the map
+  function initFloridaMap() {
+    const mapEl = document.getElementById('florida-map');
+    if (!mapEl) return;
 
-  function project(lat, lon) {
-    const xNorm = (lon - bounds.minLon) / (bounds.maxLon - bounds.minLon);
-    const yNorm = (bounds.maxLat - lat) / (bounds.maxLat - bounds.minLat);
-    const padX = 30, padYTop = 10, padYBot = 15;
-    const x = padX + xNorm * (viewBox.w - padX * 2);
-    const y = padYTop + yNorm * (viewBox.h - padYTop - padYBot);
-    return { x, y };
-  }
-
-  function renderMap() {
-    const container = document.getElementById("florida-map-container");
-    if (!container) return;
-
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("viewBox", `0 0 ${viewBox.w} ${viewBox.h}`);
-    svg.setAttribute("class", "nursery-map");
-
-    // ✅ Detailed Florida silhouette path (scaled)
-    const path = document.createElementNS(svgNS, "path");
-    path.setAttribute("d",
-      "M169.4,18.3l5.1,12.6l-6.2,16.8l-15.1,32.7l-15.8,47.1l-9.8,45.9l0.9,50.7l11.4,44.2l-9.3,23.8l-21.8-39.9l-15.7-46.1l-4.9-46.2l15.2-43.8l26.7-42.1l35.5-36.2Z"
-    );
-    path.setAttribute("fill", "#f3f4f6");
-    path.setAttribute("stroke", "#d1d5db");
-    path.setAttribute("stroke-width", "1.5");
-    svg.appendChild(path);
-
-    // Tooltip
-    const tooltip = document.createElement("div");
-    tooltip.setAttribute("class", "map-tooltip");
-    tooltip.style.position = "absolute";
-    tooltip.style.padding = "6px 10px";
-    tooltip.style.background = "white";
-    tooltip.style.border = "1px solid #ddd";
-    tooltip.style.borderRadius = "6px";
-    tooltip.style.fontSize = "12px";
-    tooltip.style.boxShadow = "0 2px 6px rgba(0,0,0,0.15)";
-    tooltip.style.display = "none";
-    container.style.position = "relative";
-    container.appendChild(tooltip);
-
-    // ✅ Simple green dot markers
-    Object.keys(nurseries).forEach(city => {
-      const [lat, lon] = coords[city] || [];
-      if (!lat || !lon) return;
-      const { x, y } = project(lat, lon);
-
-      const circle = document.createElementNS(svgNS, "circle");
-      circle.setAttribute("cx", x);
-      circle.setAttribute("cy", y);
-      circle.setAttribute("r", 4);
-      circle.setAttribute("fill", "#10b981");
-      circle.style.cursor = "pointer";
-
-      circle.addEventListener("mouseenter", () => {
-        tooltip.innerHTML = "<strong>" + city + "</strong><br/>" + nurseries[city].join("<br/>");
-        tooltip.style.left = (x + 20) + "px";
-        tooltip.style.top = (y) + "px";
-        tooltip.style.display = "block";
-      });
-      circle.addEventListener("mouseleave", () => {
-        tooltip.style.display = "none";
-      });
-
-      svg.appendChild(circle);
+    // Fit FL bounds nicely
+    const flBounds = L.latLngBounds([24.3, -87.8], [31.1, -80.0]);
+    const map = L.map('florida-map', {
+      zoomControl: false,
+      attributionControl: false,
+      minZoom: 5,
+      maxZoom: 12
     });
+    map.fitBounds(flBounds);
+    map.setMaxBounds(flBounds.pad(0.1));
 
-    container.appendChild(svg);
+    // Light gray background tile (optional; remove if you want no tiles)
+    // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //   opacity: 0.15
+    // }).addTo(map);
+
+    // Load US states GeoJSON and extract Florida
+    fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
+      .then(r => r.json())
+      .then(geo => {
+        const florida = geo.features.find(f => {
+          const name = (f.properties && (f.properties.name || f.properties.NAME)) || '';
+          return name.toLowerCase() === 'florida';
+        });
+        if (florida) {
+          L.geoJSON(florida, {
+            style: {
+              color: '#d1d5db',      // stroke
+              weight: 1.2,
+              fillColor: '#f3f4f6',  // fill
+              fillOpacity: 1
+            }
+          }).addTo(map);
+        }
+
+        // Add green dot markers on top
+        Object.keys(nurseries).forEach(city => {
+          const latlon = coords[city];
+          if (!latlon) return;
+          const [lat, lon] = latlon;
+
+          const marker = L.circleMarker([lat, lon], {
+            radius: 5,
+            color: '#10b981',     // stroke
+            weight: 1,
+            fillColor: '#10b981', // fill
+            fillOpacity: 1
+          }).addTo(map);
+
+          const html = `<strong>${city}</strong><br>${nurseries[city].join('<br>')}`;
+          marker.bindTooltip(html, { direction: 'top', offset: [0, -6], opacity: 0.95, sticky: true });
+        });
+      })
+      .catch(() => {
+        // Fallback: even if FL outline fails, still plot dots
+        Object.keys(nurseries).forEach(city => {
+          const latlon = coords[city];
+          if (!latlon) return;
+          const [lat, lon] = latlon;
+          L.circleMarker([lat, lon], {
+            radius: 5,
+            color: '#10b981',
+            weight: 1,
+            fillColor: '#10b981',
+            fillOpacity: 1
+          }).addTo(map).bindTooltip(`<strong>${city}</strong><br>${nurseries[city].join('<br>')}`, { direction: 'top', offset: [0, -6], opacity: 0.95, sticky: true });
+        });
+      });
   }
 
-  document.addEventListener("DOMContentLoaded", renderMap);
+  document.addEventListener('DOMContentLoaded', initFloridaMap);
 </script>
 </body>
 </html>
