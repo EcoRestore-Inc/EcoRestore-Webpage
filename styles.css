@@ -140,3 +140,35 @@ footer {
   vertical-align: middle; /* keeps icon aligned with text */
   font-size: 1.3em; /* optional: slightly larger for emphasis */
 }
+
+/* Community Resource Hub Section */
+.resource-hub {
+  padding: 60px 20px;
+  background: #f9fafb;
+  text-align: center;
+}
+
+.resource-hub h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: #065f46; /* deep green */
+}
+
+#florida-map-container {
+  margin: 30px auto;
+  max-width: 500px;
+  position: relative;
+}
+
+/* Tooltip for Map */
+.map-tooltip {
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.nursery-map {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+}
