@@ -245,10 +245,10 @@
     svg.setAttribute("viewBox", `0 0 ${viewBox.w} ${viewBox.h}`);
     svg.setAttribute("class", "nursery-map");
 
-    // Real Florida silhouette path (clean version)
+    // ✅ Detailed Florida silhouette path (scaled)
     const path = document.createElementNS(svgNS, "path");
     path.setAttribute("d",
-      "M165 10L180 40L170 70L150 120L130 180L120 240L125 300L135 360L110 390L80 340L60 280L55 220L70 150L100 90L135 40Z"
+      "M169.4,18.3l5.1,12.6l-6.2,16.8l-15.1,32.7l-15.8,47.1l-9.8,45.9l0.9,50.7l11.4,44.2l-9.3,23.8l-21.8-39.9l-15.7-46.1l-4.9-46.2l15.2-43.8l26.7-42.1l35.5-36.2Z"
     );
     path.setAttribute("fill", "#f3f4f6");
     path.setAttribute("stroke", "#d1d5db");
@@ -269,7 +269,7 @@
     container.style.position = "relative";
     container.appendChild(tooltip);
 
-    // Green dot markers
+    // ✅ Simple green dot markers
     Object.keys(nurseries).forEach(city => {
       const [lat, lon] = coords[city] || [];
       if (!lat || !lon) return;
