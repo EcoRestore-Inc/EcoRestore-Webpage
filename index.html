@@ -245,9 +245,9 @@
     svg.setAttribute("viewBox", `0 0 ${viewBox.w} ${viewBox.h}`);
     svg.setAttribute("class", "nursery-map");
 
-    // Accurate Florida silhouette path (gray background)
+    // Real Florida outline path 
     const path = document.createElementNS(svgNS, "path");
-    path.setAttribute("d", "M203,15 L210,40 L200,70 L180,110 L160,170 L140,230 L130,280 L120,340 L140,390 L100,395 L70,340 L50,280 L40,230 L60,160 L90,100 L130,50 Z");
+    path.setAttribute("d", "M186.5 10L210 60L195 110L170 160L145 220L130 280L120 340L140 390L100 395L70 340L55 280L45 220L65 150L95 90L130 45Z");
     path.setAttribute("fill", "#f3f4f6");
     path.setAttribute("stroke", "#d1d5db");
     path.setAttribute("stroke-width", "1.5");
@@ -267,31 +267,34 @@
     container.style.position = "relative";
     container.appendChild(tooltip);
 
-    // Leaf marker path (inline SVG)
-    const leafPath = "M6 0C2 0 0 2 0 6c0 8 12 14 12 14s12-6 12-14c0-4-2-6-6-6H6z";
-
+    // Use Font Awesome <i class="fas fa-leaf"> for markers
     Object.keys(nurseries).forEach(city => {
       const [lat, lon] = coords[city] || [];
       if (!lat || !lon) return;
       const { x, y } = project(lat, lon);
 
-      const leaf = document.createElementNS(svgNS, "path");
-      leaf.setAttribute("d", leafPath);
-      leaf.setAttribute("fill", "#10b981");
-      leaf.setAttribute("transform", `translate(${x-6},${y-6}) scale(0.5)`);
-      leaf.style.cursor = "pointer";
+      const fo = document.createElementNS(svgNS, "foreignObject");
+      fo.setAttribute("x", x - 8);
+      fo.setAttribute("y", y - 8);
+      fo.setAttribute("width", 20);
+      fo.setAttribute("height", 20);
 
-      leaf.addEventListener("mouseenter", () => {
+      const div = document.createElement("div");
+      div.innerHTML = '<i class="fas fa-leaf footer-icon"></i>';
+
+      fo.appendChild(div);
+
+      fo.addEventListener("mouseenter", () => {
         tooltip.innerHTML = "<strong>" + city + "</strong><br/>" + nurseries[city].join("<br/>");
         tooltip.style.left = (x + 20) + "px";
         tooltip.style.top = (y) + "px";
         tooltip.style.display = "block";
       });
-      leaf.addEventListener("mouseleave", () => {
+      fo.addEventListener("mouseleave", () => {
         tooltip.style.display = "none";
       });
 
-      svg.appendChild(leaf);
+      svg.appendChild(fo);
     });
 
     container.appendChild(svg);
