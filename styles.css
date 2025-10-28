@@ -189,3 +189,11 @@ footer {
   margin: 0 auto;
   display: block;
 }
+
+#florida-map {
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.leaflet-container {
+  background: transparent; /* keep your site background */
+}
